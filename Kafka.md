@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Kafka](#kafka)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Kafka
 
 * 分布式的发布-订阅消息系统。将消息持久化到磁盘中，并对消息创建了备份保证了数据的安全。

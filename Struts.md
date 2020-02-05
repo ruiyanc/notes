@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Struts2](#struts2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Struts2
 * struts框架就是对Servlet的封装
 * 注意：2.5之后filter的位置去掉ng包的路径

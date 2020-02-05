@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JDBC](#jdbc)
+- [Annotation 注解（也叫元数据）说明程序。相当于标签](#annotation-%E6%B3%A8%E8%A7%A3%E4%B9%9F%E5%8F%AB%E5%85%83%E6%95%B0%E6%8D%AE%E8%AF%B4%E6%98%8E%E7%A8%8B%E5%BA%8F%E7%9B%B8%E5%BD%93%E4%BA%8E%E6%A0%87%E7%AD%BE)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JDBC
 * 连接mysql8.0时出现的问题
     * 驱动包路径改为`com.mysql.cj.jdbc.Driver`  默认自动已注册驱动

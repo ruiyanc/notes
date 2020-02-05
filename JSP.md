@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [HTTP](#http)
+- [MVC：开发模式](#mvc%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F)
+- [JSTL](#jstl)
+- [三层架构](#%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84)
+- [Listener：监听器](#listener%E7%9B%91%E5%90%AC%E5%99%A8)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## HTTP
 * 超文本传输协议
     * 基于TCP/IP高级协议
