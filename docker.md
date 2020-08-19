@@ -8,3 +8,5 @@
   * docker images -> 列出本地镜像
   * docker rmi image ...  -> 删除镜像
   * docker inspect  -> 查看镜像
+
+* add k8s
