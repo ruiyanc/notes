@@ -11,6 +11,9 @@
 # notes 
 ## 笔记集合
 
+### 1.4
+新增elaticsearch
+
 ### 1.1
 使用dictoc生成所有md文件目录
 
