@@ -34,15 +34,27 @@
    * `query`:查询操作,`match_all`:搜索指定索引中的所有文档
    * `from`:(基于0)指定从哪个文档索引开始，`size`参数指定从from参数开始返回多少文档
    * `_source`:表示只返回需要的字段内容
-   * `match`:字段搜索查询  --> 也就是mysql的条件查询
+   * `match`:字段搜索查询  --> 也就是mysql的like查询
      * match 中如果加空格，那么会被认为两个单词，包含任意一个单词将被查询到
      * match_parase 将忽略空格，将该字符认为一个整体，会在索引中匹配包含这个整体的文档。
+   * `term`:完全匹配=查询,`terms`:完全匹配多条件查询 -->也就是mysql的in查询
    * `bool`:逻辑查询 --> MySQL的and or not
      * bool must:子句指定了所有条件必须为true的查询，则将文档视为匹配
      * bool should:子句指定了一个查询列表，其中任何一个查询必须为真，才能将文档视为匹配。
      * bool must_not:子句指定了一个查询列表，其中没有一个查询必须为真，才能将文档视为匹配
      * filter:range筛选部分查询
 7. 执行聚合查询 -> 聚合提供对数据进行分组和提取统计信息
-   * aggs:聚合条件
+   * aggs:聚合条件：
      * group_by_xxx:根据xxx进行分组
+     
+#### Java 查询API
+* 查询API
+    * 等值(term)查询：QueryBuilders.termQuery(name,value);
+    * 多值(terms)查询:QueryBuilders.termsQuery(name,value,value2,value3...);
+    * 范围(range)查询：QueryBuilders.rangeQuery(name).gte(value).lte(value);
+    * 存在(exists)查询:QueryBuilders.existsQuery(name);
+    * 模糊(wildcard)查询:QueryBuilders.wildcardQuery(name,+value+);
+    * 组合(bool)查询: BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+    * 正则(regexpQuery)查询:QueryBuilders.regexpQuery("message","xu[0-9]")
+
 
