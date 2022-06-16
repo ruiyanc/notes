@@ -31,3 +31,13 @@
    * 重新加载firewall： firewall-cmd --reload 
 
    * 查看开放端口： firewall-cmd --zone=public --list-ports
+7. 计算相关
+	* 数字转BigDecimal会出现精度不准的问题，建议使用字符串来转BigDecimal
+	* 计算保留小数并四舍五入
+		* String.format("%.2f", result) 转成字符串并保留2位小数
+		* BigDecimal divide = new BigDecimal(result)
+                .divide(new BigDecimal(dividend), 4, RoundingMode.HALF_UP) 除法运算四舍五入并保留4位小数
+	* NumberFormat numberFormat =  NumberFormat.getPercentInstance();
+    * numberFormat.setMinimumFractionDigits(2);
+    	*  百分比转小数 Number parse = numberFormat.parse(result);
+    	*  小数转百分比  String format = numberFormat.format(result) 

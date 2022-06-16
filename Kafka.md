@@ -39,3 +39,12 @@
   * 自动提交
   * 同步提交
   * 异步提交
+* zookeeper集群搭建
+    * 三个echo "1" > myid
+    * 服务检查 -> netstat -nlpt | grep -E "2181|2888|3888" 
+* kafka集群搭建
+	*  修改server.properties
+		*  broker.id=1
+		* listeners=PLAINTEXT://ip:9092
+		* advertised.listeners=PLAINTEXT://ip:9092
+		* zookeeper.connect
