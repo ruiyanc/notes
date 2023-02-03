@@ -11,5 +11,11 @@
 	* https://nifi.apache.org/docs.html
 4. nifi官方api文档
 	* https://nifi.apache.org/docs/nifi-docs/rest-api/index.html 
+5. 各配置文件说明
+	* authorizers.xml ->记录用户信息及用户认证授权方式等
+	* bootstrap.conf -> nifi启动配置信息（如nifi启动内存）
+	* state-management.xml -> 记录zookeeper节点信息
 5. api具体项目使用详见TemplateController
-	
+6. Nifi优化
+	* linux服务器设置	![linux](https://github.com/ruiyanc/images/blob/main/Nifi-soft.png)
+	* nifi.propertion设置 ![cluster](https://github.com/ruiyanc/images/blob/main/Nifi-cluster.png)

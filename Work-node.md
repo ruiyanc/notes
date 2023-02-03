@@ -17,6 +17,8 @@
    * Map map = JSON.parseObject(JSON.toJSONString(user), Map.class);
    *  将实体类转换为JSONObject
    * JSONObject jsonObject =  (JSONObject) JSON.toJSON(user);
+   * JSONObject转String默认值为null不显示，使用SerializerFeature.WriteMapNullValue则显示null
+      * String jsonString = JSONObject.toJSONString(component,SerializerFeature.WriteMapNullValue);
 
 5. Object转为String，String.valueOf(Object)优于.toString()
 
@@ -41,3 +43,7 @@
     * numberFormat.setMinimumFractionDigits(2);
     	*  百分比转小数 Number parse = numberFormat.parse(result);
     	*  小数转百分比  String format = numberFormat.format(result) 
+8.curl模拟
+	* curl -d 'username=chengdu&passwd=123' -v 'http://10.194.129.231:8080/hy_tmw_3d/logins' 模拟账号密码登录 
+	* -d:Post请求, -v:打印内容, -H 'Content-type: application/json'
+	* curl --cookie 'JSESSIONID=xxx' -v 'url' 携带cookie请求
