@@ -55,4 +55,11 @@
 		* log2=$(date -d "1 day ago" +%Y-%m-%d)
 	* 获取某天的N天前
 		* log3=$(date -d "15 day ago 2022-04-17" +%Y-%m-%d) 	
- 
+10. 多线程相关
+	* 创建线程池
+		*  ExecutorService executor = Executors.newFixedThreadPool(400)  （阿里巴巴手册不推荐）
+		*  ThreadPoolExecutor exec = new ThreadPoolExecutor(100, 500, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());（按需求类型创建线程池，推荐）
+	*  execute和submit的区别
+		1. execute是Executor接口的方法，而submit是ExecutorService的方法，并且ExecutorService接口继承了Executor接口。
+		2. execute只接受Runnable参数，没有返回值；而submit可以接受Runnable参数和Callable参数，并且返回了Future对象，可以进行任务取消、获取任务结果、判断任务是否执行完毕/取消等操作。其中，submit会对Runnable或Callable入参封装成RunnableFuture对象，调用execute方法并返回。
+		3. 通过execute方法提交的任务如果出现异常则直接抛出原异常，是在线程池中的线程中；而submit方法是捕获了异常的，只有当调用Future的get方法时，才会抛出ExecutionException异常，且是在调用get方法的线程。 

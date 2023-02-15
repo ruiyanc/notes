@@ -1,4 +1,4 @@
-### Mybatis
+## Mybatis
 
 1. 加载使用
     * 加载配置文件:InputStream is = Resources.getResourceAsStream("SqlMapConfig.xml");
