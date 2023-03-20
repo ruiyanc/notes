@@ -363,6 +363,83 @@
 	* sed -i 's/Jack/me/g' xx.txt -> 把文本所有中的Jack替换为me
 	* sed -i 's/^ *$/d' -> 删除文本中的所有空行
 
+#### JVM
+
+1. 谈谈你对Java的理解
+    * 平台无关性
+        * Java源码首先被编译成字节码，再由不同平台的JVM进行解析，Java语言在不同的平台上运行时不需要进行重新编译，Java虚拟机在执行字节码的时候，把字节码转换为具体平台上的机器指令
+        * 为什么JVM不直接将源码解析成机器码去执行
+            * 准备工作：每次执行都需要各种检查
+            * 兼容性：也可以将别的语言解析成字节码
+        * JVM如何加载.class文件
+            * JVM虚拟机
+                * Class Loader:依据特定格式加载class文件到内存
+                * Execution Engine:对命令进行解析
+                * Native Interface:融合不同开发语言的原生库为Java所用
+                * Runtime Data Area:JVM内存空间结构模型
+            * 反射
+                * Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性;这种动态获取信息以及动态调用对象方法的功能称为Java反射机制
+    * /GC/语言特性/面向对象/类库/异常处理
+
+#### 多线程
+
+1. 进程和线程
+    * 概念
+        * 进程是资源分配的最小单位，线程是CPU调度的最小单位
+        * 所有与进程相关的资源，都被记录在PCB中
+        * 进程是抢占处理机的调度单位，线程属于某个进程共享其资源
+        * 线程只由堆栈寄存器、程序计数器和TCP组成
+    * 区别
+        * 线程不能看做独立应用，而进程可看做独立应用
+        * 进程有独立的地址空间互不影响，线程只是进程的不同执行路径
+        * 线程没有独立的地址空间，多进程的程序比多线程健壮
+        * 进程的切换比线程的切换开销大
+2. Thread的start和run方法的区别
+    1. 调用start()方法会创建一个新的子线程并启动
+    2. run()方法只是Thread的一个普通方法的调用
+3. Thread和Runnable是什么关系
+    * Thread是实现了Runnable接口的类，使得run支持多线程
+    * 因类的单一继承原则，推荐多使用Runnable接口
+4. 如何实现处理线程的返回值
+    * 主线程等待法
+    * 使用Thread类的join()阻塞当前线程以等待子线程处理完毕
+    * 通过Callable接口实现：通过FutureTask或线程池获取
+5. 线程的状态
+    1. 新建(New):创建后尚未启动的线程的状态
+    2. 运行(Runnable):包含Running和Ready
+    3. 无限等待(Waiting):不会被分配CPU执行时间，需要显式被唤醒
+        * 没有设置Timeout参数的Object.wait()或Thread.join()
+        * LockSupport.park()方法
+    4. 限期等待(Time Waiting):在一定时间后会由系统自动唤醒
+        * Thread.sleep()
+        * 设置Timeout参数的Object.wait()或Thread.join()
+        * LockSupport.parkNanos()
+        * LockSupport.parkUntil()
+    5. 阻塞(Blocked):等待获取排它锁
+    6. 结束(Terminated):已终止线程的状态，线程已经结束执行
+6. sleep和wait的区别
+    1. 基本区别
+        * sleep是Thread类的方法，wait是Object类中定义的方法
+        * sleep()方法可以在任何地方使用
+        * wait()方法只能在synchronized方法或synchronized块中使用
+    2. 本质区别
+        * Thread.sleep只会让出CPU，不会导致锁行为的改变
+        * Object.wait不仅让出CPU，还会释放已经占有的同步资源锁
+7. notify和notifyAll的区别
+    1. 锁池EntryList
+        * 线程所需要被占用对象的锁拥有权而进入阻塞状态，进去某个地方等待锁的释放，这个地方便是该对象的锁池
+    2. 等待池WaitSet
+        * 线程A调用某个对象的wait(),就会释放该对象的锁，同时线程A进入该对象的等待池中，进入等待池中的线程不会去竞争该对象的锁
+    3. notifyAll会让所有处于等待池的线程全部进入锁池去竞争获取锁的机会
+    4. notify只会随机选取一个处于等待池中的线程进去锁池去竞争获取锁的机会
+8. yield
+    * 当调用Thread.yield()函数时，会给线程调度器一个当前线程愿意让出CPU使用的暗示，但线程调度器可能会不理睬
+9. 如何中断线程
+    1. 调用stop()方法停止线程（**废弃的方法**）
+    2. 调用interrupt()通知线程应该中断了
+        
+
+
 ***
 1. 对一组数据进行排序？
    1. 有没有可能包含有大量重复元素？-> 三路快排
