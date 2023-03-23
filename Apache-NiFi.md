@@ -15,7 +15,8 @@
 	* authorizers.xml ->记录用户信息及用户认证授权方式等
 	* bootstrap.conf -> nifi启动配置信息（如nifi启动内存）
 	* state-management.xml -> 记录zookeeper节点信息
-5. api具体项目使用详见TemplateController
-6. Nifi优化
+6. api具体项目使用详见TemplateController
+7. Nifi集群版本升级及权限配置详见同名txt文件
+8. Nifi优化
 	* linux服务器设置	![linux](https://github.com/ruiyanc/images/blob/main/Nifi-soft.png)
 	* nifi.propertion设置 ![cluster](https://github.com/ruiyanc/images/blob/main/Nifi-cluster.png)
