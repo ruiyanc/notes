@@ -7,9 +7,40 @@
 
    * svn checkout svn://localhost/hangge --username=hangge --password=123 ~/Documents/hangge
 
-3. 事务只加在方法上就行，锁表解决方法为SELECT * FROM `information_schema`.`innodb_trx` ORDER BY `trx_started`，kill杀掉trx_mysql_thread_id进程
+3. Mysql相关
 
-4. Map和Bean互转最好用的方式--FastJSON
+   * 事务问题
+     1. 事务只加在方法上就行
+     2. 锁表解决方法为SELECT * FROM `information_schema`.`innodb_trx` ORDER BY `trx_started`，再kill杀掉trx_mysql_thread_id进程
+
+   * 联表查询并修改内容
+      * ```
+         UPDATE `qz_shop_refund_request` r LEFT JOIN `qz_shop_delivery_order_item` i ON r.order_item_id=i.item_id
+         SET r.product_quantity=i.product_quantity WHERE r.order_type=0;
+        ```
+   * Mysql8的递归查询
+      * ```
+         WITH RECURSIVE cte AS (
+         -- 基础查询：获取目标 ID 对应的行（根节点）
+         SELECT id, parentId
+         FROM your_table
+         WHERE id = #{targetId}
+
+         UNION ALL
+
+         -- 递归查询：查找 parentId 匹配的子节点
+         SELECT t.id, t.parentId
+         FROM your_table t
+         INNER JOIN cte c ON t.parentId = c.id ) 
+         SELECT * FROM cte; 
+        ```
+   * Mysql8处理json字段的函数
+     * JSON_CONTAINS(json, 'key') 判断json对象中是否包含指定值
+     * JSON_OVERLAPS(json1, json2) 判断两个json是否有重叠内容（数组交集）
+     * JSON_LENGTH(json) 获取JSON的元素数量
+     * JSON_ARRAY(json1, json2) 构造JSON数组
+
+4. Map和Bean互转最好用的方式 -- FastJSON
 
    * 将 Map 转换为 实体类
    		* User user = JSON.parseObject(JSON.toJSONString(user01), User.class);
@@ -22,7 +53,6 @@
 
 5. Object转为String，String.valueOf(Object)优于.toString()
      * 使用toString如果object为null则报错，使用.valueOf不会
-
 
 6. 服务器防火墙问题
 
@@ -70,7 +100,6 @@
 
 11. Redis相关
 
-
       1. [Centos7安装升级最新版Redis7.0.10 避坑攻略_redis最新版本CSDN博客](https://blog.csdn.net/lhmyy521125/article/details/129722928)
 
       2. 高版本建议使用脚本启动及关闭 /etc/init.d/redis_6379 start
@@ -106,10 +135,9 @@
       3. 编写system服务单元
 
          1. 创建system服务文件
-         2. ![示例文件](https://i.niupic.com/images/2023/05/30/b7nP.png)
-         3. After：指示systemd何时应该运行脚本，在当前例子脚本将在网络连接后运行。 ExecStart：启动时要执行的实际脚本的绝对路径。 WantedBy：systemd单元应该安装到哪个引导目标中
-         4. systemctl daemon-reload 系统重新读取服务文件。 systemctl enable xxx.service 启用开机自启
-         5. service xxx.service start/stop/restart 启动/终止/重启服务
+         2. After：指示systemd何时应该运行脚本，在当前例子脚本将在网络连接后运行。 ExecStart：启动时要执行的实际脚本的绝对路径。 WantedBy：systemd单元应该安装到哪个引导目标中
+         3. systemctl daemon-reload 系统重新读取服务文件。 systemctl enable xxx.service 启用开机自启
+         4. service xxx.service start/stop/restart 启动/终止/重启服务
 
 13. Docker相关
 
@@ -121,12 +149,19 @@
       6. docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456 --name mysql
 
 14. 多线程相关
+    * 创建线程池
+        *  ExecutorService executor = Executors.newFixedThreadPool(400)  （阿里巴巴手册不推荐）
+        *  ThreadPoolExecutor exec = new ThreadPoolExecutor(100, 500, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());（按需求类型创建线程池，推荐）
 
-      * 创建线程池
-      	*  ExecutorService executor = Executors.newFixedThreadPool(400)  （阿里巴巴手册不推荐）
-      	*  ThreadPoolExecutor exec = new ThreadPoolExecutor(100, 500, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());（按需求类型创建线程池，推荐）
+    *  execute和submit的区别
+        * execute是Executor接口的方法，而submit是ExecutorService的方法，并且ExecutorService接口继承了Executor接口。
+        * execute只接受Runnable参数，没有返回值；而submit可以接受Runnable参数和Callable参数，并且返回了Future对象，可以进行任务取消、获取任务结果、判断任务是否执行完毕/取消等操作。其中，submit会对Runnable或Callable入参封装成RunnableFuture对象，调用execute方法并返回。
+        * 通过execute方法提交的任务如果出现异常则直接抛出原异常，是在线程池中的线程中；而submit方法是捕获了异常的，只有当调用Future的get方法时，才会抛出ExecutionException异常，且是在调用get方法的线程。 
 
-      *  execute和submit的区别
-      	1. execute是Executor接口的方法，而submit是ExecutorService的方法，并且ExecutorService接口继承了Executor接口。
-      	2. execute只接受Runnable参数，没有返回值；而submit可以接受Runnable参数和Callable参数，并且返回了Future对象，可以进行任务取消、获取任务结果、判断任务是否执行完毕/取消等操作。其中，submit会对Runnable或Callable入参封装成RunnableFuture对象，调用execute方法并返回。
-      	3. 通过execute方法提交的任务如果出现异常则直接抛出原异常，是在线程池中的线程中；而submit方法是捕获了异常的，只有当调用Future的get方法时，才会抛出ExecutionException异常，且是在调用get方法的线程。 
+15. git相关
+    * [git常用命令速查表](https://github.com/ruiyanc/images/blob/main/GitCommand.png)
+    *  git cherry-pick 7exx 指定某次提交内容到当前分支
+    
+16. Xxl-Job相关
+    * [xxl-job官方文档](https://www.xuxueli.com/xxl-job/)
+    * 踩坑记录：xxl-job需要使用官方原生模式（包括账号密码与token两种登录方式）；慎用第三方集成，可能会遇到固定账密登录，而大部分公司只给token用于登录（安全起见）
