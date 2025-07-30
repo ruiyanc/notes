@@ -165,3 +165,14 @@
 16. Xxl-Job相关
     * [xxl-job官方文档](https://www.xuxueli.com/xxl-job/)
     * 踩坑记录：xxl-job需要使用官方原生模式（包括账号密码与token两种登录方式）；慎用第三方集成，可能会遇到固定账密登录，而大部分公司只给token用于登录（安全起见）
+17. 中台相关
+    * 概念：多个项目把公共部分提取出来，作为组件的形式引入，以达到多项目共享技术共享数据减少重复开发的效果。
+    * 公共部分：如注册登录部分（账密，手机号验证码）、国家行政区划区域信息、阿里短信服务相关、二维码、用户信息、微信支付相关、app极光推送、审核屏蔽、app反馈意见等
+    * app开发都会有appId用于识别项目区分
+    * 再通过打包中台公共项目，其它项目引入中台jar，实现项目与中台的交互
+    * 一般打包中台项目时，使用版本号递增迭代，然后将jar包发布到总仓库（mvn deploy），
+    * 或打包jar包到本地仓库用于本地开发测试 mvn install:install-file -Dfile="C:\Users\Administrator\.m2\feign-base-0.0.3.jar" -DgroupId="com.zchd" -DartifactId="feign-base" -Dversion="0.0.3" -Dpackaging=jar
+    * 最终使用rpc调用等方式使用中台功能
+18. 腾讯相关
+    * 微信小程序开发：[小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/api.html)
+    * 登录注册拿到微信openid，后续通过openid调wxApi查询用户手机号等信息（按次收费）
