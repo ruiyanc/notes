@@ -57,4 +57,13 @@
     * 组合(bool)查询: BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
     * 正则(regexpQuery)查询:QueryBuilders.regexpQuery("message","xu[0-9]")
 
-
+#### docker安装elasticsearch
+1. [elasticsearch安装文档指南](https://elasticsearch.bookhub.tech/set_up_elasticsearch/installing_elasticsearch/docker)
+2. docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" --name elasticsearch imageId 单节点集群启动es
+3. docker run -d --name es-test -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:8.15.0 
+   * es8版本默认开启安全密码认证，可如此关闭
+4. docker run -d --name kibana -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 --network=es-net -p 5601:5601 kibana:7.13.4 部署Kibana
+5. 安装对应版本的analysis-ik分词器./bin/elasticsearch-plugin install https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-8.19.4.zip
+   * ik_smart分词算法 -> 只能最少切分
+   * ik_max_word分词算法 -> 最细粒度划分
+6. docker exec -it `elasticsearch` /bin/bash 进入es容器

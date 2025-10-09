@@ -49,7 +49,7 @@
         * 如果对一个变量执行lock操作，将会清空工作内存中此变量的值，在执行引擎使用这个变量前需要重新执行load或assign操作初始化变量的值
         * 如果一个变量事先没有被lock操作锁定，则不允许对它执行unlock操作；也不允许去unlock一个被其它线程锁定的变量
         * 对一个变量执行unlock操作之前，必须先把此变量同步到主内存中（执行store和write操作）
-        * <img title="JMM内存操作" src="https://github.com/ruiyanc/images/blob/main/JMMSynchronousOperation.jpg" alt="">
+        * [JMM内存操作](https://github.com/ruiyanc/images/blob/main/JMMSynchronousOperation.jpg)
 4. 线程安全性
    * 当多个线程访问某个类时，不管运行时环境采用`何种调度方式`或者这些进程将如何交替执行，并且在主调代码中`不需要任何额外的同步或协同`，这个类都能表现出`正确的行为`，那么就称这个类是线程安全的
    
@@ -157,7 +157,9 @@
    
    * HashMap、TreeMap -> **ConcurrentHashMap(\*)**、ConcurrentSkipListMap(高并发、有序)
    * HashMap与ConcurrentHashMap（*）
-       * 
+       * HashMap适用于单线程环境，本地缓存，数据量不大追求**极致性能**的场景
+       * ConcurrentHashMap适用于多线程环境且有频繁的读写操作，需要保证**线程安全**又要尽可能地提高性能，作为共享缓存任务队列线程间状态共享
+       * ConcurrentHashMap不允许key或value为null
    * 安全共享对象策略
      * 线程限制：一个被线程限制的对象，由线程独占，并且只能被占有它的线程修改
      * 共享只读：一个共享只读的对象，在没有额外同步的情况下，可以被多个线程并发访问，但是任何线程都不能修改它

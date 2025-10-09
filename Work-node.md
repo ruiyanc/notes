@@ -72,9 +72,9 @@
      	* BigDecimal divide = new BigDecimal(result)
                   .divide(new BigDecimal(dividend), 4, RoundingMode.HALF_UP) 除法运算四舍五入并保留4位小数
      * NumberFormat numberFormat =  NumberFormat.getPercentInstance();
-      * numberFormat.setMinimumFractionDigits(2);
-         	*  百分比转小数 Number parse = numberFormat.parse(result);
-             	*  小数转百分比  String format = numberFormat.format(result) 
+     * numberFormat.setMinimumFractionDigits(2);
+          *  百分比转小数 Number parse = numberFormat.parse(result);
+         * 小数转百分比  String format = numberFormat.format(result) 
 
 8. curl模拟
 
@@ -146,7 +146,8 @@
       3. docker pull xxx下载镜像
       4. docker ps -a 查看所有镜像日志
       5. mysql启动需要配置密码 docker run  -e MYSQL_ROOT_PASSWORD=root --name mysql -d mysql
-      6. docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456 --name mysql
+      6. docker run imageId -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root --name mysql
+      7. docker run imageId -d -p 9100:9100 -e MYSQL_ROOT_PASSWORD=root --name mysql
 
 14. 多线程相关
     * 创建线程池
@@ -176,3 +177,12 @@
 18. 腾讯相关
     * 微信小程序开发：[小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/api.html)
     * 登录注册拿到微信openid，后续通过openid调wxApi查询用户手机号等信息（按次收费）
+19. Go开发相关
+    1. 在Go原生语言中没有Java中的BigDecimal精度计算类型，导致小数(float64)计算出现精度丢失
+    2. Go代码中事务逻辑是以传参的形式(```app.Db.Transaction(func(tx *gorm.DB) error {}```)，导致后续逻辑处理方法中皆需传参tx，用以保证逻辑处于同一事务中进行
+    3. Go语言中主要是指针引用传递，如gorm框架库查询
+       * ```go
+          var school *model.School
+          ret := tx.Where("school_id = ?", req.SchoolID).First(&school)
+         ```
+    4. Go语言中没有LocalDateTime等时间类型，主要由carbon时间处理库提供
