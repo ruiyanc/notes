@@ -138,6 +138,10 @@
          2. After：指示systemd何时应该运行脚本，在当前例子脚本将在网络连接后运行。 ExecStart：启动时要执行的实际脚本的绝对路径。 WantedBy：systemd单元应该安装到哪个引导目标中
          3. systemctl daemon-reload 系统重新读取服务文件。 systemctl enable xxx.service 启用开机自启
          4. service xxx.service start/stop/restart 启动/终止/重启服务
+       4. 服务器部署jar包
+          1. ps -ef|grep xxx.jar |grep -v grep |awk '{print $2}'  获取jar包的PID
+          2. kill PID 杀死程序 -9 强制杀死
+          3. pkill 正在运行的程序名
 
 13. Docker相关
 
